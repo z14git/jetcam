@@ -13,9 +13,10 @@ class CSICamera(Camera):
     def __init__(self, *args, **kwargs):
         super(CSICamera, self).__init__(*args, **kwargs)
 
-        self.input = jetson.utils.videoSource(
-            f'csi://{self.capture_device}',
-            [f'--input-width={self.width}', f'--input-height={self.height}'])
+        self.input = jetson.utils.videoSource(f'csi://{self.capture_device}', [
+            f'--input-width={self.width}', f'--input-height={self.height}',
+            '--input-flip=rotate-180'
+        ])
 
     def _read(self):
         cuda_img = self.input.Capture()
